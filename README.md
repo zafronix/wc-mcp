@@ -2,6 +2,8 @@
 
 > **by Zafronix** · npm: `@zafronix/wc-mcp` · MIT-licensed
 
+[![wc-mcp MCP server](https://glama.ai/mcp/servers/zafronix/wc-mcp/badges/card.svg)](https://glama.ai/mcp/servers/zafronix/wc-mcp)
+
 Model Context Protocol server giving Claude / Cursor / any MCP-aware agent grounded access to every FIFA World Cup since 1930. **23 tournaments. 1,168+ matches. 2,500+ players. 206 stadiums.** All exposed as 15 typed tools so the model stops hallucinating squads, scores, brackets, and stadium altitudes.
 
 Powered by the public [Zafronix World Cup API](https://api.zafronix.com/) — free tier with key, 1,000 req/day, no card.
