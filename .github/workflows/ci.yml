@@ -1,0 +1,62 @@
+# Minimal CI for wc-mcp — gives Glama (and any other catalog that
+# checks GitHub Actions status) a green CI signal alongside our
+# release tags.
+#
+# Builds the package on every push + PR, smoke-tests the server boots
+# cleanly without WC_API_KEY (the introspection-friendly mode), and
+# verifies tools/list returns 15 tools.
+#
+# We intentionally keep this tiny — the server has no test suite of
+# its own (it's a thin wrapper over the WC API). The CI here is
+# essentially "does it build + start + advertise its tools."
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-smoke:
+    name: build + introspection smoke test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 24.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test — tools/list returns 15 tools
+        run: |
+          # Send the MCP introspection probe and confirm 15 tool entries
+          # come back. Pipe through node so we exit non-zero on a bad shape.
+          printf '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}\n' \
+            | node dist/index.js 2>/dev/null \
+            | tee /tmp/probe.out
+          node -e '
+            const fs = require("fs");
+            const lines = fs.readFileSync("/tmp/probe.out", "utf8").trim().split("\n");
+            const last = JSON.parse(lines[lines.length - 1]);
+            const tools = last.result?.tools ?? [];
+            if (tools.length !== 15) {
+              console.error("Expected 15 tools, got", tools.length);
+              process.exit(1);
+            }
+            console.log("OK — 15 tools advertised:", tools.map(t => t.name).join(", "));
+          '
