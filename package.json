@@ -1,0 +1,50 @@
+{
+  "name": "@zafronix/wc-mcp",
+  "version": "0.1.2",
+  "description": "World Cup History MCP — by Zafronix. Every FIFA World Cup since 1930 as MCP tools. 23 tournaments, 1,168+ matches, 2,500+ players, 206 stadiums. Squads, brackets, stadiums, trivia — searchable from Claude / Cursor / any MCP-aware agent.",
+  "license": "MIT",
+  "homepage": "https://github.com/zafronix/wc-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zafronix/wc-mcp.git"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "wc-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "world-cup",
+    "fifa",
+    "sports",
+    "claude",
+    "anthropic"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "bugs": {
+    "url": "https://github.com/zafronix/wc-mcp/issues"
+  }
+}

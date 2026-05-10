@@ -1,0 +1,8 @@
+node_modules
+src
+*.tsbuildinfo
+.git
+.gitignore
+.DS_Store
+*.log
+tsconfig.json
