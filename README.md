@@ -25,8 +25,8 @@ npm install -g @zafronix/wc-mcp
 Or run from source:
 
 ```bash
-git clone https://github.com/zafronix/zafronix-wc-api
-cd zafronix-wc-api/mcp
+git clone https://github.com/zafronix/wc-mcp
+cd wc-mcp
 npm install
 npm run build
 ```
